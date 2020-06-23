@@ -40,19 +40,19 @@
               <li class="active">
                 <div class="d-flex bd-highlight">
                   <div class="img_cont">
-									<img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
-								</div>
+                    <img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
+                  </div>
                   <div class="channel-info">
                     <span>general</span>
                     <p>Created by flack</p>
                   </div>
                 </div>
               </li>
-              <li >
+              <li>
                 <div class="d-flex bd-highlight">
                   <div class="img_cont">
-									<img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
-								</div>
+                    <img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
+                  </div>
                   <div class="channel-info">
                     <span>general</span>
                     <p>Created by flack</p>
@@ -65,7 +65,41 @@
 
       <div class="col-md-8 col-xl-6">
         <div class="card">
-          Hey
+          <div class="card-header">
+            <div class="d-flex bd-highlight">
+              <div class="img_cont">
+                <img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
+              </div>
+              <div class="channel-info">
+                <span>general</span>
+                <p>323 Messages</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body message-card-body">
+            <div class="d-flex justify-content-start mb-4">
+              <div class="message-container">
+                Hello there whats up!!
+                <span class="time">Flack - 8:40 am, 01/02/2001</span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mb-4">
+              <div class="message-container-send">
+                Hi Khalid i am good tnx how about you?
+                <span class="time-send">Sanmonsua - 8:55 AM, 01/02/2001</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="input-group">
+              <textarea name="message" class="form-control type_msg" placeholder="Type your message..."></textarea>
+              <div class="input-group-append">
+                <span class="input-group-text send_btn"><svg class="bi bi-cursor-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z" />
+                  </svg></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
