@@ -111,7 +111,7 @@ body {
   overflow-y: auto;
 }
 
-.channels li {
+#channels li {
   width: 100% !important;
   padding: 5px 10px;
   margin-bottom: 15px !important;

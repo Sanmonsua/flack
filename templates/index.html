@@ -4,13 +4,51 @@
 <head>
   <meta charset="utf-8">
   <title>Flack - Chatting APP</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="{{url_for('static', filename='master.css')}}">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+
+  <!-- Templates -->
+  <script id="msg_send" type="text/template">
+    <div class="d-flex justify-content-start mb-4">
+      <div class="message-container">
+        {{ message }}
+        <span class="time">{{ username }} - {{ time }}, {{ date }}</span>
+      </div>
+    </div>
+  </script>
+
+  <script id="msg_received" type="text/template">
+    <div class="d-flex justify-content-end mb-4">
+      <div class="message-container-send">
+        {{message}}
+        <span class="time-send">{{username}} - {{time}}, {{date}}</span>
+      </div>
+    </div>
+  </script>
+
+  <script id="channel" type="text/template">
+    {%-raw%}
+    <a style="text-decoration:none;" class="channel" href="" data-name="{{name}}" data-creator="{{creator}}">
+      {%endraw%}
+      <li>
+        <div class="d-flex bd-highlight">
+          <div class="img_cont">
+            <img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
+          </div>
+          {%-raw%}
+          <div class="channel-info">
+            <span>{{name}}</span>
+            <p>Created by {{creator}}</p>
+          </div>
+        </div>
+      </li>
+    </a>
+    {%endraw%}
+
+
+  </script>
+  <script src="{{url_for('static', filename='index.js')}}" charset="utf-8"></script>
 </head>
 
 <body>
@@ -38,29 +76,8 @@
             </div>
           </div>
           <div class="card-body channel-body h-100">
-            <ui class="channels">
-              <li class="active">
-                <div class="d-flex bd-highlight">
-                  <div class="img_cont">
-                    <img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
-                  </div>
-                  <div class="channel-info">
-                    <span>general</span>
-                    <p>Created by flack</p>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="d-flex bd-highlight">
-                  <div class="img_cont">
-                    <img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
-                  </div>
-                  <div class="channel-info">
-                    <span>general</span>
-                    <p>Created by flack</p>
-                  </div>
-                </div>
-              </li>
+            <ui id="channels">
+            </ul>
           </div>
         </div>
       </div>
@@ -73,48 +90,13 @@
                 <img src="{{url_for('static', filename='channel.png')}}" class="rounded-circle channel_img">
               </div>
               <div class="channel-info">
-                <span>general</span>
-                <p>323 Messages</p>
+                <span id="channel-name"></span>
+                <p id="messagesCount"></p>
               </div>
             </div>
           </div>
-          <div class="card-body message-card-body h-100">
-            <div class="d-flex justify-content-start mb-4">
-              <div class="message-container">
-                Hello there whats up!!
-                <span class="time">Flack - 8:40 am, 01/02/2001</span>
-              </div>
-            </div>
-            <div class="d-flex justify-content-end mb-4">
-              <div class="message-container-send">
-                Hi Khalid i am good tnx how about you?
-                <span class="time-send">Sanmonsua - 8:55 AM, 01/02/2001</span>
-              </div>
-            </div>
-            <div class="d-flex justify-content-start mb-4">
-              <div class="message-container">
-                Hello there whats up!!
-                <span class="time">Flack - 8:40 am, 01/02/2001</span>
-              </div>
-            </div>
-            <div class="d-flex justify-content-end mb-4">
-              <div class="message-container-send">
-                Hi Khalid i am good tnx how about you?
-                <span class="time-send">Sanmonsua - 8:55 AM, 01/02/2001</span>
-              </div>
-            </div>
-            <div class="d-flex justify-content-start mb-4">
-              <div class="message-container">
-                Hello there whats up!!
-                <span class="time">Flack - 8:40 am, 01/02/2001</span>
-              </div>
-            </div>
-            <div class="d-flex justify-content-end mb-4">
-              <div class="message-container-send">
-                Hi Khalid i am good tnx how about you?
-                <span class="time-send">Sanmonsua - 8:55 AM, 01/02/2001</span>
-              </div>
-            </div>
+          <div id="chat" class="card-body message-card-body h-100">
+
           </div>
           <div class="card-footer">
             <div class="input-group">
@@ -131,6 +113,7 @@
     </div>
 
   </div>
+
 </body>
 
 </html>
