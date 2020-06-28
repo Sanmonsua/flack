@@ -215,3 +215,10 @@ body {
     max-height: 400px;
     overflow-y: scroll;
 }
+
+button{
+  border: none;
+  padding: 0;
+  background-color: inherit;
+  
+}
