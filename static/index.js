@@ -26,6 +26,29 @@ document.addEventListener('DOMContentLoaded', () =>{
     request.send(data);
     return false;
   };
+
+  var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
+  socket.on('connect', () =>{
+    document.querySelector('#send-message-form').onsubmit = () =>{
+      const message = document.querySelector('#message').value;
+      socket.emit('send message', {'message':message});
+      return false;
+    };
+  });
+
+  socket.on('message data', data =>{
+    if (document.querySelector('#chat').dataset.channel == data.channel){
+      if (document.querySelector('#chat').dataset.username == data.creator){
+        var msg = msgSendTemplate(data);
+      } else{
+        var msg = msgReceiveTemplate(data);
+      }
+      document.querySelector('#chat').innerHTML += msg;
+      document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
+    }
+  })
+
 });
 
 function loadChannelsList(){
@@ -45,9 +68,21 @@ function loadChannelsList(){
         requestLoadChannel.open('POST', '/load-channel');
 
         requestLoadChannel.onload = () => {
+          document.querySelector('#chat').innerHTML = "";
           const channel = JSON.parse(requestLoadChannel.responseText);
           document.querySelector('#channel-name').innerHTML = channel.name;
           document.querySelector('#messagesCount').innerHTML = channel.messages.length + " messages";
+          document.querySelector('#chat').dataset.channel = channel.name;
+          const username = document.querySelector('#chat').dataset.username;
+          channel.messages.forEach(m => {
+            if (m.creator == username){
+              var message = msgSendTemplate(m);
+            } else{
+              var message = msgReceiveTemplate(m);
+            }
+            document.querySelector('#chat').innerHTML += message;
+            document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
+          });
         }
 
         const data = new FormData();
@@ -66,10 +101,25 @@ function loadChannelSelected() {
   request.open('GET', '/load-channel');
 
   request.onload = () => {
+    document.querySelector('#chat').innerHTML = "";
     const channel = JSON.parse(request.responseText);
     document.querySelector('#channel-name').innerHTML = channel.name;
     document.querySelector('#messagesCount').innerHTML = channel.messages.length + " messages";
+    document.querySelector('#chat').dataset.channel = channel.name;
+    const username = document.querySelector('#chat').dataset.username;
+    channel.messages.forEach(m => {
+      if (m.creator == username){
+        var message = msgSendTemplate(m);
+      } else{
+        var message = msgReceiveTemplate(m);
+      }
+
+      document.querySelector('#chat').innerHTML += message;
+      document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
+    });
+
   }
 
   request.send();
+  return false;
 }

@@ -3,6 +3,8 @@ import os
 from flask import Flask, session, render_template, redirect, url_for, request, jsonify
 from flask_socketio import SocketIO, emit
 
+from datetime import datetime
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.secret_key = 'asfsdshfsdjkh'
@@ -10,7 +12,18 @@ socketio = SocketIO(app)
 
 
 channels = []
-c = {"name":"general", "creator":"flack", "messages":['hello']}
+c = {"name":"general", "creator":"flack", "messages":[
+{
+    "message":"hello how are you??",
+    "creator":"flack",
+    "datetime":"21/21/89 67:89"
+},
+{
+    "message":"fine and you??",
+    "creator":"santi",
+    "datetime":"21/21/89 67:76"
+}
+]}
 channels.append(c)
 
 
@@ -61,3 +74,17 @@ def signin():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
+
+
+@socketio.on('send message')
+def send(data):
+    now = datetime.now()
+
+    body = data['message']
+    msgDateTime = now.strftime("%m/%d/%y %H:%M")
+    message = {"message":body, "creator":session['username'], "channel":session['channel']['name'], "datetime":msgDateTime}
+    for c in channels:
+        if c['name'] == session['channel']['name']:
+            c['messages'].append(message)
+            session['channel'] = c
+    emit('message data', message, broadcast=True)
