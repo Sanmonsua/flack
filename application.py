@@ -10,7 +10,7 @@ socketio = SocketIO(app)
 
 
 channels = []
-c = {"name":"general", "creator":"flack", "messages":[]}
+c = {"name":"general", "creator":"flack", "messages":['hello']}
 channels.append(c)
 
 
@@ -20,12 +20,10 @@ def index():
         if request.method == 'GET':
             return redirect(url_for('signin'))
         session['username'] = request.form.get('username')
-    if 'channel' not in session:
-        session['channel'] = channels[0]
-    return render_template('index.html', username=session['username'], channel=session['channel'])
+    return render_template('index.html', username=session['username'])
 
 
-@app.route('/channels', methods=['POST'])
+@app.route('/channels')
 def get_channels():
     return jsonify(channels)
 
@@ -38,9 +36,20 @@ def add_channel():
         if name == channel['name']:
             existed = True
     if not existed:
-        c = {"name":name, "creator":session['username']}
+        c = {"name":name, "creator":session['username'], "messages":[]}
         channels.append(c)
-    return redirect(url_for('index'))
+        session['channel'] = c;
+    return jsonify({'existed':existed})
+
+
+@app.route('/load-channel', methods=['POST', 'GET'])
+def loadChannel():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        for c in channels:
+            if c['name'] == name:
+                session['channel'] = c;
+    return jsonify(session['channel'])
 
 
 @app.route("/sign-in")
