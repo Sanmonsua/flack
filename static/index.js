@@ -8,6 +8,16 @@ document.addEventListener('DOMContentLoaded', () =>{
   loadChannelsList();
   loadChannelSelected();
 
+  document.querySelector('#addChannel').disabled = true;
+
+  document.querySelector('#inputAddChannel').onkeyup = function(){
+    if (this.value.length > 0){
+      document.querySelector('#addChannel').disabled = false;
+    } else{
+      document.querySelector('#addChannel').disabled = true;
+    }
+  }
+
   document.querySelector('#addChannelForm').onsubmit = () =>{
     const request = new XMLHttpRequest();
     const name = document.querySelector('#inputAddChannel').value;
@@ -30,8 +40,18 @@ document.addEventListener('DOMContentLoaded', () =>{
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
   socket.on('connect', () =>{
+    document.querySelector('#submit-message').disabled = true;
+
+    document.querySelector('#input-message').onkeyup = function(){
+      if (this.value.length > 0){
+        document.querySelector('#submit-message').disabled = false;
+      } else{
+        document.querySelector('#submit-message').disabled = true;
+      }
+    }
+
     document.querySelector('#send-message-form').onsubmit = () =>{
-      const message = document.querySelector('#message').value;
+      const message = document.querySelector('#input-message').value;
       socket.emit('send message', {'message':message});
       return false;
     };
@@ -47,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () =>{
       document.querySelector('#chat').innerHTML += msg;
       document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
     }
-  })
+  });
 
 });
 
@@ -57,6 +77,7 @@ function loadChannelsList(){
 
   request.onload = () =>{
     const channels = JSON.parse(request.responseText);
+    document.querySelector("#channels").innerHTML = "";
     channels.forEach( c => {
       const channel = channelTemplate(c);
       document.querySelector("#channels").innerHTML += channel;
@@ -88,7 +109,6 @@ function loadChannelsList(){
         const data = new FormData();
         data.append('name', this.dataset.name);
         requestLoadChannel.send(data);
-        return false;
       };
     });
   }
@@ -121,5 +141,4 @@ function loadChannelSelected() {
   }
 
   request.send();
-  return false;
 }
