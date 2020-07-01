@@ -78,7 +78,3 @@ def send(data):
             c['messages'].append(message)
             session['channel'] = c
     emit('message data', message, broadcast=True)
-
-
-if __name__ == "__main__":
-  socketio.run(app)
