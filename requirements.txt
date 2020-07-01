@@ -6,7 +6,7 @@ gevent==20.6.2
 gevent-socketio==0.3.6
 gevent-websocket==0.10.1
 greenlet==0.4.16
-gunicorn==0.16.1
+gunicorn==20.0.4
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
