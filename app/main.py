@@ -43,12 +43,14 @@ def add_channel():
 
 @app.route('/load-channel', methods=['POST', 'GET'])
 def loadChannel():
-    if request.method == 'POST':
-        name = request.form.get('name')
+    try:
+        if request.method == 'POST':
+            name = request.form.get('name')
+        else:
+            name = session['channel']['name']
         for c in channels:
             if c['name'] == name:
                 session['channel'] = c;
-    try:
         return jsonify(session['channel'])
     except KeyError:
         session['channel'] = channels[0]

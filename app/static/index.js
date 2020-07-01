@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     document.querySelector('#send-message-form').onsubmit = () =>{
       const message = document.querySelector('#input-message').value;
       socket.emit('send message', {'message':message});
+      document.querySelector('#input-message').value = "";
       return false;
     };
   });
@@ -67,6 +68,31 @@ document.addEventListener('DOMContentLoaded', () =>{
       }
       document.querySelector('#chat').innerHTML += msg;
       document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
+
+      const requestLoadChannel = new XMLHttpRequest();
+      requestLoadChannel.open('POST', '/load-channel');
+
+      requestLoadChannel.onload = () => {
+        document.querySelector('#chat').innerHTML = "";
+        const channel = JSON.parse(requestLoadChannel.responseText);
+        document.querySelector('#channel-name').innerHTML = channel.name;
+        document.querySelector('#messagesCount').innerHTML = channel.messages.length + " messages";
+        document.querySelector('#chat').dataset.channel = channel.name;
+        const username = document.querySelector('#chat').dataset.username;
+        channel.messages.forEach(m => {
+          if (m.creator == username){
+            var message = msgSendTemplate(m);
+          } else{
+            var message = msgReceiveTemplate(m);
+          }
+          document.querySelector('#chat').innerHTML += message;
+          document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
+        });
+      }
+
+      const data_request = new FormData();
+      data_request.append('name', data.channel);
+      requestLoadChannel.send(data_request);
     }
   });
 
@@ -120,12 +146,12 @@ function loadChannelsList(){
 
 
 function loadChannelSelected() {
-  const request = new XMLHttpRequest();
-  request.open('GET', '/load-channel');
+  const requestLoadChannel = new XMLHttpRequest();
+  requestLoadChannel.open('GET', '/load-channel');
 
-  request.onload = () => {
+  requestLoadChannel.onload = () => {
     document.querySelector('#chat').innerHTML = "";
-    const channel = JSON.parse(request.responseText);
+    const channel = JSON.parse(requestLoadChannel.responseText);
     document.querySelector('#channel-name').innerHTML = channel.name;
     document.querySelector('#messagesCount').innerHTML = channel.messages.length + " messages";
     document.querySelector('#chat').dataset.channel = channel.name;
@@ -136,12 +162,10 @@ function loadChannelSelected() {
       } else{
         var message = msgReceiveTemplate(m);
       }
-
       document.querySelector('#chat').innerHTML += message;
       document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
     });
-
   }
 
-  request.send();
+  requestLoadChannel.send();
 }
