@@ -1,0 +1,219 @@
+html, body {
+  height: 100%;
+  width: auto;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #222831;
+  color: #ececec;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-radius: 15px;
+  ;
+  background-color: #30475e;
+  border-color: #30475e;
+  color: #ececec;
+}
+
+.button {
+  margin-top: 10px;
+  border-radius: 15px;
+  ;
+  background-color: #f2a365;
+  border-color: #f2a365;
+  color: #ececec;
+}
+
+.button:hover {
+  background-color: #f2a365;
+  border-color: #f2a365;
+  box-shadow: 0 6px 10px 0 rgba(128, 98, 96, .16);
+}
+
+.btn-outline-secondary {
+  border-color: #f2a365;
+  color: #f2a365;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f2a365;
+  color: #ececec;
+}
+
+.card {
+  margin-top: 50px;
+  height: 450px;
+  border-radius: 15px !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.container {
+  align-content: center;
+}
+
+.search {
+  border-radius: 15px 0 0 15px !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 0 !important;
+  color: white !important;
+}
+
+.search_btn {
+  border-radius: 0 15px 15px 0 !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 0 !important;
+  color: #f2a365 !important;
+  cursor: pointer;
+}
+
+.search:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.channel-body {
+  list-style: none;
+  padding: 0;
+  overflow-y: auto;
+}
+
+#channels li {
+  width: 100% !important;
+  padding: 5px 10px;
+  margin-bottom: 15px !important;
+}
+
+.img_cont {
+  position: relative;
+  height: 70px;
+  width: 70px;
+}
+
+.channel-info {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.channel-info span {
+  font-size: 20px;
+  color: #ececec;
+}
+
+.channel-info p {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.channel_img {
+  height: 60px;
+  width: 60px;
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.message-container {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  border-radius: 25px;
+  background-color: #30475e;
+  padding: 10px;
+  position: relative;
+  color: #ececec;
+  min-width: 150px;
+}
+
+.message-container-send {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
+  border-radius: 25px;
+  background-color: #f2a365;
+  padding: 10px;
+  position: relative;
+  color: #ececec;
+  min-width: 150px;
+}
+
+.card-body{
+  overflow-y: auto;
+}
+
+.time {
+  position: absolute;
+  left: 12px;
+  bottom: -15px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}
+
+.time-send {
+  position: absolute;
+  right: 12px;
+  bottom: -15px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}
+
+.type_msg {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 15px 0 0 15px !important;
+  border: 0;
+  color: white !important;
+  height: 60px !important;
+  overflow-y: auto;
+}
+
+.type_msg:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.send_btn {
+  border-radius: 0 15px 15px 0 !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 0 !important;
+  color: #f2a365 !important;
+  cursor: pointer;
+}
+
+.scroll {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+button{
+  border: none;
+  padding: 0;
+  background-color: inherit;
+
+}
